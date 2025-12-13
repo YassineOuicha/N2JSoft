@@ -92,3 +92,6 @@ La page de visualisation d'une note de frais permet :
 ## Mes Notes
 
 À compléter par vos soins.
+
+To do : check if we need to update firstname/lastname of a user. if so change entity to set
+/// for now we only update other fields than names.
