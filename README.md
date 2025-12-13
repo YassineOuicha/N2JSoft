@@ -95,3 +95,5 @@ La page de visualisation d'une note de frais permet :
 
 To do : check if we need to update firstname/lastname of a user. if so change entity to set
 /// for now we only update other fields than names.
+
+To do : implement extension methods to map entities to dtos and vice versa to reduce boilerplate code.
