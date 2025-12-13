@@ -12,4 +12,6 @@ internal sealed class ExpenseReport
     // Here we are only interested in year and month no need for full date to avoid complexity
     public int Year { get; set; }
     public int Month { get; set; }
+    
+    public ICollection<Expense> Expenses { get; set; } = new List<Expense>();
 }
