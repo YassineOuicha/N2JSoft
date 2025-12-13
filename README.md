@@ -99,3 +99,7 @@ To do : check if we need to update firstname/lastname of a user. if so change en
 To do : implement extension methods to map entities to dtos and vice versa to reduce boilerplate code.
 
 Todo : implements errors handling for example expense note's description length exceeded, user not found when creating expense note etc...
+
+To do: replace the minimal api endpoints
+
+To do: Use CQRS if possible to separate queries from commands

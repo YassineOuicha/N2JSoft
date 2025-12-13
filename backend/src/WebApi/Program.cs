@@ -36,7 +36,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapUserEndpoints();
+app.MapControllers();
 app.MapHealthChecks("/health");
 
 app.Run();
