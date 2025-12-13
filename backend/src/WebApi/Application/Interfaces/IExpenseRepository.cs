@@ -13,4 +13,6 @@ internal interface IExpenseRepository
         int pageNumber,
         int pageSize,
         CancellationToken ct);
+
+    Task DeleteAsync(Guid expenseId, CancellationToken ct);
 }

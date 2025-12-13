@@ -55,4 +55,14 @@ internal sealed class ExpenseRepository(AppDbContext db): IExpenseRepository
 
         return (items, total);
     }
+
+    public async Task DeleteAsync(Guid expenseId, CancellationToken ct)
+    {
+        var expense = await db.Expenses.FirstOrDefaultAsync(e => e.Id == expenseId, ct);
+        if (expense != null)
+        {
+            expense.IsDeleted = true;
+            await db.SaveChangesAsync(ct);
+        }
+    }
 }

@@ -101,4 +101,18 @@ internal sealed class ExpenseService(
         
         return new PagedResultDto<ExpenseListItemDto>(dtos, total, pageNumber, pageSize);
     }
+
+    public async Task<bool> DeleteAsync(Guid expenseId, CancellationToken ct)
+    {
+        var expense = await expenses.GetByIdAsync(expenseId, ct);
+        if (expense == null)
+        {
+            return false;
+        }
+
+        await expenses.DeleteAsync(expenseId, ct);
+        await expenses.SaveChangesAsync(ct);
+
+        return true;
+    }
 }

@@ -14,6 +14,7 @@ builder.Services
     .AddOpenApi()
     .AddPersistence();
 builder.Services.AddHealthChecks();
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
