@@ -15,7 +15,7 @@ public sealed class ExpenseReportService(IUserRepository users, IExpenseReportRe
            return null;
        }
        
-       var exists = await reports.ExistsForUserMonthAsync(dto.UserId, dto.Month, dto.Month, ct); 
+       var exists = await reports.ExistsForUserMonthAsync(dto.UserId, dto.Year, dto.Month, ct); 
        if (exists) 
        { 
            return null;
@@ -67,7 +67,7 @@ public sealed class ExpenseReportService(IUserRepository users, IExpenseReportRe
             .Select(er => new ExpenseReportListItemDto(
                     er.Id,
                     er.UserId,
-                    $"{er.User.FirstName}{er.User.LastName}",
+                    $"{er.User.FirstName} {er.User.LastName}",
                     er.Year,
                     er.Month,
                     er.Title
