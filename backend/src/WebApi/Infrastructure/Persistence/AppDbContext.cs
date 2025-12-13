@@ -6,6 +6,9 @@ namespace WebApi.Infrastructure.Persistence;
 
 internal sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
+    public DbSet<User> Users => Set<User>();
+    public DbSet<ExpenseReport> ExpenseReports => Set<ExpenseReport>();
+    public DbSet<Expense> Expenses => Set<Expense>();
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
