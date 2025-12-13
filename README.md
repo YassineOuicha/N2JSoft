@@ -103,3 +103,5 @@ Todo : implements errors handling for example expense note's description length 
 To do: replace the minimal api endpoints
 
 To do: Use CQRS if possible to separate queries from commands
+
+To do: configure navigation properties between tables 

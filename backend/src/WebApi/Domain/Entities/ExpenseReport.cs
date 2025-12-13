@@ -4,6 +4,8 @@ internal sealed class ExpenseReport
 {
     public Guid Id { get; set; }
     public required Guid UserId { get; init; }
+    public User User { get; set; } = null!;
+    
     public DateTime CreatedUtc { get; set; } = DateTime.UtcNow;
    
     // Not editable after creation

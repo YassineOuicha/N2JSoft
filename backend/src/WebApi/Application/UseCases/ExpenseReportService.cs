@@ -59,4 +59,24 @@ internal sealed class ExpenseReportService(IUserRepository users, IExpenseReport
         
         return true;
     }
+
+    public async Task<IReadOnlyList<ExpenseReportListItemDto>> ListAsync(CancellationToken ct)
+    { 
+        var expenseReports = await reports.ListAsync(ct);
+        return expenseReports
+            .Select(er => new ExpenseReportListItemDto(
+                    er.Id,
+                    er.UserId,
+                    $"{er.User.FirstName}{er.User.LastName}",
+                    er.Year,
+                    er.Month,
+                    er.Title
+                )
+            ).ToList();
+    }
+
+    public async Task<ExpenseReport?> GetAsync(Guid id, CancellationToken ct)
+    {
+        return await reports.GetByIdAsync(id, ct);
+    }
 }

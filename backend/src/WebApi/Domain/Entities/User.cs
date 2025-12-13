@@ -15,4 +15,6 @@ internal sealed class User
     public int MonthlyExpenseLimit { get; set; } = 10;
 
     public bool IsDeleted { get; set; }
+    
+    public ICollection<ExpenseReport> ExpenseReports { get; set; } = new List<ExpenseReport>();
 }

@@ -1,4 +1,5 @@
-﻿using WebApi.Domain.Entities;
+﻿using WebApi.Application.Dtos;
+using WebApi.Domain.Entities;
 
 namespace WebApi.Application.Interfaces;
 
@@ -9,4 +10,5 @@ internal interface IExpenseReportRepository
     Task AddAsync(ExpenseReport expenseReport, CancellationToken ct);
     Task SaveChangesAsync(CancellationToken ct);
     Task DeleteAsync(ExpenseReport expenseReport, CancellationToken ct);
+    Task<IReadOnlyList<ExpenseReport>> ListAsync(CancellationToken ct);
 }

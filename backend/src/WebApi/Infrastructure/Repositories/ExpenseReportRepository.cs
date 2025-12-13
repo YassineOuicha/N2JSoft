@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using WebApi.Application.Dtos;
 using WebApi.Application.Interfaces;
 using WebApi.Domain.Entities;
 using WebApi.Infrastructure.Persistence;
@@ -39,5 +40,16 @@ internal sealed class ExpenseReportRepository(AppDbContext db): IExpenseReportRe
             db.ExpenseReports.Remove(report);
             await db.SaveChangesAsync(ct);
         }
+    }
+
+    public async Task<IReadOnlyList<ExpenseReport>> ListAsync(CancellationToken ct)
+    {
+        return await db.ExpenseReports.AsNoTracking()
+            .AsQueryable()
+            .Include(er => er.User)
+            .Where(er => !er.User.IsDeleted)
+            .OrderByDescending(er => er.Year)
+            .ThenByDescending(er => er.Month)
+            .ToListAsync(ct);
     }
 }
