@@ -5,7 +5,7 @@ using WebApi.Domain.Entities;
 
 namespace WebApi.Application.UseCases;
 
-internal sealed class ExpenseReportService(IUserRepository users, IExpenseReportRepository reports)
+public sealed class ExpenseReportService(IUserRepository users, IExpenseReportRepository reports)
 {
     public async Task<Guid?> CreateAsync(CreateExpenseReportDto dto, CancellationToken ct)
     {

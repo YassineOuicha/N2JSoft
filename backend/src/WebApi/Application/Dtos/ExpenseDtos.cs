@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Application.Dtos;
 
-internal sealed record ExpenseListItemDto(
+public sealed record ExpenseListItemDto(
     Guid Id,
     DateOnly Date,
     string Description,
@@ -11,7 +11,7 @@ internal sealed record ExpenseListItemDto(
     string PostalCode
 );
 
-internal sealed record CreateExpenseDto(
+public sealed record CreateExpenseDto(
     DateOnly Date,
     string Description,
     decimal Amount,
@@ -21,7 +21,7 @@ internal sealed record CreateExpenseDto(
     string PostalCode
 );
 
-internal sealed record UpdateExpenseDto( 
+public sealed record UpdateExpenseDto( 
     DateOnly Date,
     string Description,
     decimal Amount,
@@ -31,7 +31,7 @@ internal sealed record UpdateExpenseDto(
     string PostalCode
 );
 
-internal sealed record PagedResultDto<T>(
+public sealed record PagedResultDto<T>(
     IReadOnlyList<T> Items,
     int TotalCount,
     int PageNumber,

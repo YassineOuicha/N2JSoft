@@ -5,7 +5,7 @@ using WebApi.Domain.ValueObjects;
 
 namespace WebApi.Application.UseCases;
 
-internal sealed class UserService(IUserRepository users)
+public class UserService(IUserRepository users)
 {
     public async Task<IReadOnlyList<UserListItemDto>> ListAsync(bool onlyActive, CancellationToken ct)
     {

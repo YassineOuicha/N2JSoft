@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Application.Dtos;
 
-internal sealed record ExpenseReportListItemDto(
+public sealed record ExpenseReportListItemDto(
     Guid Id,
     Guid UserId,
     string UserDisplayName,
@@ -9,13 +9,13 @@ internal sealed record ExpenseReportListItemDto(
     string Title
 );
 
-internal sealed record CreateExpenseReportDto(
+public sealed record CreateExpenseReportDto(
     Guid UserId,
     int Year,
     int Month
 );
 
-internal sealed record ExpenseReportDetailsDto(
+public sealed record ExpenseReportDetailsDto(
     Guid Id,
     Guid UserId,
     string UserDisplayName,

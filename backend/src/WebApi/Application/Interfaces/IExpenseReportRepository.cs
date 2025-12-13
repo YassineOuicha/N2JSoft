@@ -3,7 +3,7 @@ using WebApi.Domain.Entities;
 
 namespace WebApi.Application.Interfaces;
 
-internal interface IExpenseReportRepository
+public interface IExpenseReportRepository
 {
     Task<ExpenseReport?> GetByIdAsync(Guid expenseReportId, CancellationToken ct);
     Task<bool> ExistsForUserMonthAsync(Guid userId, int year, int month, CancellationToken ct);

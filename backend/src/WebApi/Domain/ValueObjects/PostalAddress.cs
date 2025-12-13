@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Domain.ValueObjects;
 
-internal sealed record PostalAddress(
+public sealed record PostalAddress(
     string Street,
     string PostalCode,
     string City,

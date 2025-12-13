@@ -2,7 +2,7 @@
 
 namespace WebApi.Application.Interfaces;
 
-internal interface IUserRepository
+public interface IUserRepository
 {
     Task<User?> GetByIdAsync(Guid userId, CancellationToken ct);
     Task<IReadOnlyList<User>> ListAsync(bool onlyActive, CancellationToken ct);

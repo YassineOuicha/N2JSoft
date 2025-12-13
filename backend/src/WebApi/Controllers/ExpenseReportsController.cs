@@ -6,7 +6,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/expense-reports")]
-internal sealed class ExpenseReportsController(ExpenseReportService expenseReportService): ControllerBase
+public sealed class ExpenseReportsController(ExpenseReportService expenseReportService): ControllerBase
 {
     // GET api/expense-reports
     [HttpGet]

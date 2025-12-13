@@ -6,7 +6,7 @@ namespace WebApi.Controllers;
 
 [ApiController]
 [Route("api/users")]
-internal sealed class UsersController(UserService userService) : ControllerBase
+public class UsersController(UserService userService) : ControllerBase
 {
     // GET api/users?onlyActive=true
     [HttpGet]

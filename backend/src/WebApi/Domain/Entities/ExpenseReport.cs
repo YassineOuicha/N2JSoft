@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Domain.Entities;
 
-internal sealed class ExpenseReport
+public sealed class ExpenseReport
 {
     public Guid Id { get; set; }
     public required Guid UserId { get; init; }

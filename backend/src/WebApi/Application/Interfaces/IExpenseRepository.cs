@@ -2,7 +2,7 @@
 
 namespace WebApi.Application.Interfaces;
 
-internal interface IExpenseRepository
+public interface IExpenseRepository
 {
     Task<Expense?> GetByIdAsync(Guid id, CancellationToken ct);
     Task<int> CountForUserMonthAsync(Guid userId, int year, int month, CancellationToken ct);

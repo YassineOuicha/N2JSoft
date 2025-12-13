@@ -5,7 +5,7 @@ using WebApi.Domain.ValueObjects;
 
 namespace WebApi.Application.UseCases;
 
-internal sealed class ExpenseService(
+public sealed class ExpenseService(
     IUserRepository users,
     IExpenseReportRepository reports,
     IExpenseRepository expenses)

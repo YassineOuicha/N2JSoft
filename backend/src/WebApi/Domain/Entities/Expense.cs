@@ -2,7 +2,7 @@
 
 namespace WebApi.Domain.Entities;
 
-internal sealed class Expense
+public sealed class Expense
 {
     public Guid Id { get; set; }
     public Guid ExpenseReportId { get; set; }

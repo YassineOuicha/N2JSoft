@@ -1,6 +1,6 @@
 ﻿namespace WebApi.Application.Dtos;
 
-internal sealed record UserListItemDto(
+public sealed record UserListItemDto(
     Guid Id,
     string FirstName,
     string LastName,
@@ -8,7 +8,7 @@ internal sealed record UserListItemDto(
     int MonthlyExpenseLimit
 );
 
-internal sealed record UserDetailDto(
+public sealed record UserDetailDto(
     Guid Id,
     string FirstName,
     string LastName,
@@ -20,7 +20,7 @@ internal sealed record UserDetailDto(
     string Country
 );
 
-internal sealed record CreateUserDto(
+public sealed record CreateUserDto(
     string FirstName,
     string LastName,
     string Street,
@@ -31,7 +31,7 @@ internal sealed record CreateUserDto(
     bool IsActive
 );
 
-internal sealed record UpdateUserDto(
+public sealed record UpdateUserDto(
     string FirstName,
     string LastName,
     string Street,
