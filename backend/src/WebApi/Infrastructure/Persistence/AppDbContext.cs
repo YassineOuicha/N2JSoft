@@ -13,8 +13,9 @@ internal sealed class AppDbContext(DbContextOptions<AppDbContext> options) : DbC
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfiguration(new UserEntityTypeConfiguration());
-        modelBuilder.Entity<User>().HasQueryFilter(u => !u.IsDeleted);
-        modelBuilder.Entity<Expense>().HasQueryFilter(e => !e.IsDeleted);
+
+        modelBuilder.Entity<User>().OwnsOne(u => u.PostalAddress);
+        modelBuilder.Entity<Expense>().OwnsOne(e => e.BillingAddress);
     }
 
     internal static async Task SeedAsync(DbContext context, CancellationToken cancellationToken)
