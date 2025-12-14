@@ -1,1 +1,23 @@
-<p>users-page works!</p>
+<h2>Users</h2>
+
+<button (click)="toggle()">
+    {{ onlyActive ? 'Show all users' : 'Show only active users' }}
+</button>
+
+@if (error) {
+    <p>{{ error }}</p>
+}
+
+@if (users.length>0) {
+    <ul>
+        @for (user of users; track user.id) {
+            <li>
+                {{ user.firstName }} {{ user.lastName }}
+                (limit: {{ user.monthlyExpenseLimit }})
+                <button (click)="delete(user.id)">Delete</button>
+            </li>
+        }
+    </ul>
+} @else {
+    <p>No users found.</p>
+}
