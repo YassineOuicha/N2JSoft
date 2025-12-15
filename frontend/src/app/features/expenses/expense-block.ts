@@ -2,11 +2,23 @@ import { Component, inject, Input, OnInit } from "@angular/core";
 import {ExpensesService} from "../../core/services/expenses.service";
 import {ExpenseListItemDto} from "../../shared/models/expense.models";
 import {FormsModule} from "@angular/forms";
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import {MatFormField, MatInput} from '@angular/material/input';
+import {NavbarComponent} from "../../shared/components/navbar/navbar.component";
 
 
 @Component({
   selector: "app-expense-block",
-  imports: [FormsModule],
+  imports: [
+    FormsModule,
+    MatTableModule,
+    MatButtonModule,
+    MatTableModule,
+    MatFormField,
+    NavbarComponent,
+    MatInput,
+  ],
   templateUrl: "./expense-block.html",
   styleUrl: "./expense-block.css",
 })

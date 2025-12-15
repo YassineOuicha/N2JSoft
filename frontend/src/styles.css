@@ -17,3 +17,25 @@
 .snack-success .mat-mdc-button {
     color: white;
 }
+
+.page-container {
+    padding: 24px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+table {
+    width: 100%;
+    margin-top: 16px;
+}
+
+.pager {
+    margin-top: 12px;
+    display: flex;
+    gap: 8px;
+}

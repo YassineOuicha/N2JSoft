@@ -1,28 +1,38 @@
+<app-navbar></app-navbar>
+
 <h3>Expenses</h3>
+<div class="form-row">
+    <mat-form-field><input matInput placeholder="Description" [(ngModel)]="description" /></mat-form-field>
+    <mat-form-field><input matInput type="number" placeholder="Amount (€)" [(ngModel)]="amount" /></mat-form-field>
+    <mat-form-field><input matInput placeholder="Brand" [(ngModel)]="brand" /></mat-form-field>
+    <button mat-raised-button color="primary" (click)="create()">Add</button>
+</div>
 
-<section>
-    <input [(ngModel)]="description" placeholder="Description" />
-    <input type="number" [(ngModel)]="amount" placeholder="Amount (€)" />
-    <input [(ngModel)]="brand" placeholder="Brand" />
-    <input [(ngModel)]="street" placeholder="Street" />
-    <input [(ngModel)]="city" placeholder="City" />
-    <input [(ngModel)]="postalCode" placeholder="Postal code" />
+<table mat-table [dataSource]="expenses" class="mat-elevation-z1">
 
-    <button (click)="create()">Add</button>
-    @if (error) {
-        <p>{{ error }}</p>
-    }
-</section>
+    <ng-container matColumnDef="desc">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let e">{{ e.description }}</td>
+    </ng-container>
 
-<ul>
-    @for (expense of expenses; track expense.id) {
-        <li>
-            {{ expense.description }} - {{ expense.amount }} €
-            <button (click)="delete(expense.id)">Delete</button>
-        </li>
-    }
-</ul>
+    <ng-container matColumnDef="amount">
+        <th mat-header-cell *matHeaderCellDef>Amount</th>
+        <td mat-cell *matCellDef="let e">{{ e.amount }} €</td>
+    </ng-container>
 
-<button (click)="prev()" [disabled]="pageNumber === 1">Prev</button>
-<button (click)="next()" [disabled]="pageNumber * pageSize >= totalCount">Next</button>
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let e">
+            <button mat-button color="warn" (click)="delete(e.id)">Delete</button>
+        </td>
+    </ng-container>
 
+    <tr mat-header-row *matHeaderRowDef="['desc','amount','actions']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['desc','amount','actions'];"></tr>
+
+</table>
+
+<div class="pager">
+    <button mat-button (click)="prev()" [disabled]="pageNumber === 1">Prev</button>
+    <button mat-button (click)="next()" [disabled]="pageNumber * pageSize >= totalCount">Next</button>
+</div>
