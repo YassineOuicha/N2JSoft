@@ -1,1 +1,36 @@
-<p>expense-reports-page works!</p>
+<h2>Expense reports</h2>
+
+@if (users.length > 0) {
+    <section>
+        <select [(ngModel)]="selectedUserId">
+            <option value="">-- user --</option>
+            @for (user of users; track user.id) {
+                <option [value]="user.id">
+                    {{ user.firstName }} {{ user.lastName }}
+                </option>
+            }
+        </select>
+
+        <input type="number" [(ngModel)]="year" />
+        <input type="number" [(ngModel)]="month" />
+
+        <button (click)="create()">Create</button>
+        @if (error) {
+            <p>{{ error }}</p>
+        }
+    </section>
+}
+
+@if (reports.length > 0) {
+    <ul>
+        @for (report of reports; track report.id) {
+            <li>
+                <a [routerLink]="['/expense-reports', report.id]">
+                    {{ report.title }}
+                </a>
+                <button (click)="delete(report.id)">Delete</button>
+            </li>
+        }
+    </ul>
+}
+
