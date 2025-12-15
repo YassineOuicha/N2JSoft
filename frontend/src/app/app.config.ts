@@ -6,12 +6,14 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { appRoutes } from './app.routes';
+import {provideAnimationsAsync} from "@angular/platform-browser/animations/async";
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(appRoutes),
-    provideHttpClient(withInterceptorsFromDi()),
+      provideBrowserGlobalErrorListeners(),
+      provideZoneChangeDetection({ eventCoalescing: true }),
+      provideRouter(appRoutes),
+      provideAnimationsAsync(),
+      provideHttpClient(withInterceptorsFromDi()),
   ],
 };
