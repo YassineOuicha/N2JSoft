@@ -5,10 +5,23 @@ import { ExpenseReportsService } from "../../../core/services/expense-reports.se
 import { UsersService } from "../../../core/services/users.service";
 import { FormsModule } from "@angular/forms";
 import { RouterLink } from "@angular/router";
+import {NavbarComponent} from "../../../shared/components/navbar/navbar.component";
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: "app-expense-reports-page",
-  imports: [FormsModule, RouterLink],
+  imports: [
+      FormsModule,
+      RouterLink,
+      NavbarComponent,
+      MatTableModule,
+      MatButtonModule,
+      MatSelectModule,
+      MatInputModule,
+  ],
   templateUrl: "./expense-reports-page.html",
   styleUrl: "./expense-reports-page.css",
 })
