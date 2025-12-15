@@ -1,23 +1,43 @@
-<h2>Users</h2>
+<app-navbar></app-navbar>
 
-<button (click)="toggle()">
-    {{ onlyActive ? 'Show all users' : 'Show only active users' }}
-</button>
+<div class="page-container">
+    <h2>Users</h2>
 
-@if (error) {
-    <p>{{ error }}</p>
-}
+    <button mat-raised-button color="primary" (click)="toggle()">
+        {{ onlyActive ? 'Show all users' : 'Show only active users' }}
+    </button>
 
-@if (users.length>0) {
-    <ul>
-        @for (user of users; track user.id) {
-            <li>
-                {{ user.firstName }} {{ user.lastName }}
-                (limit: {{ user.monthlyExpenseLimit }})
-                <button (click)="delete(user.id)">Delete</button>
-            </li>
-        }
-    </ul>
-} @else {
-    <p>No users found.</p>
-}
+    @if (users.length > 0) {
+        <table mat-table [dataSource]="users" class="mat-elevation-z2">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let u">
+                    {{ u.firstName }} {{ u.lastName }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="limit">
+                <th mat-header-cell *matHeaderCellDef>Monthly limit</th>
+                <td mat-cell *matCellDef="let u">
+                    {{ u.monthlyExpenseLimit }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let u">
+                    <button mat-button color="warn" (click)="delete(u.id)">
+                        Delete
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        </table>
+    } @else {
+        <p>No users found</p>
+    }
+</div>

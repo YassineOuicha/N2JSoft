@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
-import { RouterLink, RouterLinkActive} from "@angular/router";
+import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 
 @Component({
   selector: "app-home-page",
-  imports: [RouterLink, RouterLinkActive],
+  imports: [NavbarComponent],
   templateUrl: "./home-page.html",
   styleUrl: "./home-page.css",
 })
