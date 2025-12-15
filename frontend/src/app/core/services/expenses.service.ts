@@ -14,8 +14,8 @@ import {
 export class ExpensesService {
     private readonly api = inject(ApiClient);
 
-    listByReport(reportId: string, pageNumber: number): Observable<PagedResultDto<ExpenseListItemDto[]>> {
-        return this.api.get<PagedResultDto<ExpenseListItemDto[]>>(
+    listByReport(reportId: string, pageNumber: number): Observable<PagedResultDto<ExpenseListItemDto>> {
+        return this.api.get<PagedResultDto<ExpenseListItemDto>>(
             `api/expenses/by-report/${reportId}?pageNumber=${pageNumber}`);
     }
 

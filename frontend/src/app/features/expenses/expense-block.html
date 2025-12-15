@@ -1,1 +1,28 @@
-<p>expense-block works!</p>
+<h3>Expenses</h3>
+
+<section>
+    <input [(ngModel)]="description" placeholder="Description" />
+    <input type="number" [(ngModel)]="amount" placeholder="Amount (€)" />
+    <input [(ngModel)]="brand" placeholder="Brand" />
+    <input [(ngModel)]="street" placeholder="Street" />
+    <input [(ngModel)]="city" placeholder="City" />
+    <input [(ngModel)]="postalCode" placeholder="Postal code" />
+
+    <button (click)="create()">Add</button>
+    @if (error) {
+        <p>{{ error }}</p>
+    }
+</section>
+
+<ul>
+    @for (expense of expenses; track expense.id) {
+        <li>
+            {{ expense.description }} - {{ expense.amount }} €
+            <button (click)="delete(expense.id)">Delete</button>
+        </li>
+    }
+</ul>
+
+<button (click)="prev()" [disabled]="pageNumber === 1">Prev</button>
+<button (click)="next()" [disabled]="pageNumber * pageSize >= totalCount">Next</button>
+

@@ -22,7 +22,7 @@ export interface CreateExpenseDto {
 export type UpdateExpenseDto = CreateExpenseDto;
 
 export interface PagedResultDto<T> {
-    items: readonly T[];
+    items: T[];
     totalCount: number;
     pageNumber: number;
     pageSize: number;
