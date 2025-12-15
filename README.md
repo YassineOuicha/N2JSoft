@@ -105,3 +105,6 @@ To do: replace the minimal api endpoints
 To do: Use CQRS if possible to separate queries from commands
 
 To do: configure navigation properties between tables 
+
+
+To do : implement a snackbar to inform user of error instead of printing errors
