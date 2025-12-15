@@ -7,7 +7,7 @@
         {{ onlyActive ? 'Show all users' : 'Show only active users' }}
     </button>
 
-    @if (users.length > 0) {
+    @if (users.length>0) {
         <table mat-table [dataSource]="users" class="mat-elevation-z2">
 
             <ng-container matColumnDef="name">

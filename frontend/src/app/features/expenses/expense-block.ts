@@ -5,8 +5,6 @@ import {FormsModule} from "@angular/forms";
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatFormField, MatInput} from '@angular/material/input';
-import {NavbarComponent} from "../../shared/components/navbar/navbar.component";
-
 
 @Component({
   selector: "app-expense-block",
@@ -16,7 +14,6 @@ import {NavbarComponent} from "../../shared/components/navbar/navbar.component";
     MatButtonModule,
     MatTableModule,
     MatFormField,
-    NavbarComponent,
     MatInput,
   ],
   templateUrl: "./expense-block.html",

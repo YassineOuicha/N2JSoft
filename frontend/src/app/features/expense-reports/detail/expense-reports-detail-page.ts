@@ -3,10 +3,11 @@ import { ExpenseReportListItemDto } from "../../../shared/models/expense-report.
 import { ActivatedRoute } from "@angular/router";
 import { ExpenseReportsService } from "../../../core/services/expense-reports.service";
 import { ExpenseBlock } from "../../expenses/expense-block";
+import {NavbarComponent} from "../../../shared/components/navbar/navbar.component";
 
 @Component({
   selector: "app-expense-reports-detail-page",
-  imports: [ExpenseBlock],
+  imports: [ExpenseBlock, NavbarComponent],
   templateUrl: "./expense-reports-detail-page.html",
   styleUrl: "./expense-reports-detail-page.css",
 })

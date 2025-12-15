@@ -4,10 +4,11 @@ import { UserListItemDto } from "../../shared/models/user.models";
 import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-users-page",
-  imports: [MatTableModule, MatButtonModule, NavbarComponent],
+  imports: [CommonModule, MatTableModule, MatButtonModule, NavbarComponent],
   templateUrl: "./users-page.html",
   styleUrl: "./users-page.css",
 })

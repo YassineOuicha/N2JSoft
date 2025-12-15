@@ -1,6 +1,4 @@
-<app-navbar></app-navbar>
-
-<h3>Expenses</h3>
+<h3>Add expense details below:</h3>
 <div class="form-row">
     <mat-form-field><input matInput placeholder="Description" [(ngModel)]="description" /></mat-form-field>
     <mat-form-field><input matInput type="number" placeholder="Amount (€)" [(ngModel)]="amount" /></mat-form-field>
@@ -8,31 +6,33 @@
     <button mat-raised-button color="primary" (click)="create()">Add</button>
 </div>
 
-<table mat-table [dataSource]="expenses" class="mat-elevation-z1">
+@if (expenses.length > 0) {
+    <table mat-table [dataSource]="expenses" class="mat-elevation-z1">
 
-    <ng-container matColumnDef="desc">
-        <th mat-header-cell *matHeaderCellDef>Description</th>
-        <td mat-cell *matCellDef="let e">{{ e.description }}</td>
-    </ng-container>
+        <ng-container matColumnDef="desc">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let e">{{ e.description }}</td>
+        </ng-container>
 
-    <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>Amount</th>
-        <td mat-cell *matCellDef="let e">{{ e.amount }} €</td>
-    </ng-container>
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let e">{{ e.amount }} €</td>
+        </ng-container>
 
-    <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef></th>
-        <td mat-cell *matCellDef="let e">
-            <button mat-button color="warn" (click)="delete(e.id)">Delete</button>
-        </td>
-    </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let e">
+                <button mat-button color="warn" (click)="delete(e.id)">Delete</button>
+            </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['desc','amount','actions']"></tr>
-    <tr mat-row *matRowDef="let row; columns: ['desc','amount','actions'];"></tr>
+        <tr mat-header-row *matHeaderRowDef="['desc','amount','actions']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['desc','amount','actions'];"></tr>
 
-</table>
+    </table>
 
-<div class="pager">
-    <button mat-button (click)="prev()" [disabled]="pageNumber === 1">Prev</button>
-    <button mat-button (click)="next()" [disabled]="pageNumber * pageSize >= totalCount">Next</button>
-</div>
+    <div class="pager">
+        <button mat-button (click)="prev()" [disabled]="pageNumber === 1">Prev</button>
+        <button mat-button (click)="next()" [disabled]="pageNumber * pageSize >= totalCount">Next</button>
+    </div>
+}
