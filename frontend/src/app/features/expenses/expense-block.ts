@@ -5,6 +5,7 @@ import {FormsModule} from "@angular/forms";
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatFormField, MatInput} from '@angular/material/input';
+import { SnackbarService } from "../../core/services/snackbar.service";
 
 @Component({
   selector: "app-expense-block",
@@ -33,7 +34,7 @@ export class ExpenseBlock implements OnInit {
   city = "";
   postalCode = "";
 
-  error: string | null = null;
+  private readonly snackbarService = inject(SnackbarService);
 
   ngOnInit() {
     this.load();
@@ -48,15 +49,13 @@ export class ExpenseBlock implements OnInit {
           this.totalCount = result.totalCount;
           this.pageNumber = result.pageSize;
         },
-        error: (err) => {
-          this.error = err.message;
-          console.log(this.error);
-        },
+        error: err => {
+          this.snackbarService.error(err.message);
+        }
       });
   }
 
   create(): void {
-    this.error = null;
     this.expensesService
       .create(this.reportId, {
         date: new Date().toISOString().substring(0, 10),
@@ -72,23 +71,18 @@ export class ExpenseBlock implements OnInit {
           this.reset();
           this.load();
         },
-        error: (err) => {
-          this.error =
-            err.status === 400
-              ? "Monthly quota reached"
-              : "Error creating expense";
-          console.log(this.error);
-        },
+        error: err => {
+          this.snackbarService.error(err.message);
+        }
       });
   }
 
   delete(id: string): void {
     this.expensesService.delete(id).subscribe({
       next: () => this.load(),
-      error: (err) => {
-        this.error = err.message;
-        console.log(err);
-      },
+      error: err => {
+        this.snackbarService.error(err.message);
+      }
     });
   }
 

@@ -5,6 +5,7 @@ import { MatTableModule } from "@angular/material/table";
 import { MatButtonModule } from "@angular/material/button";
 import { NavbarComponent } from "../../shared/components/navbar/navbar.component";
 import { CommonModule } from "@angular/common";
+import {SnackbarService} from "../../core/services/snackbar.service";
 
 @Component({
   selector: "app-users-page",
@@ -14,9 +15,9 @@ import { CommonModule } from "@angular/common";
 })
 export class UsersPage implements OnInit {
   private readonly usersService = inject(UsersService);
+  private readonly snackbarService = inject(SnackbarService);
   users: UserListItemDto[] = [];
   onlyActive = true;
-  error: string | null = null;
 
   displayedColumns = ["name", "limit", "actions"];
 
@@ -25,10 +26,11 @@ export class UsersPage implements OnInit {
   }
 
   load(): void {
-    this.error = null;
     this.usersService.list(this.onlyActive).subscribe({
       next: (data) => (this.users = data),
-      error: () => (this.error = "Error while loading users"),
+      error: err => {
+          this.snackbarService.error(err.message);
+      }
     });
   }
 
@@ -40,7 +42,9 @@ export class UsersPage implements OnInit {
   delete(id: string): void {
     this.usersService.delete(id).subscribe({
       next: () => this.load(),
-      error: () => (this.error = "Error while deleting user"),
+      error: err => {
+          this.snackbarService.error(err.message);
+      }
     });
   }
 }

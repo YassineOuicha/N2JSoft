@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { SnackbarService } from "../../../core/services/snackbar.service";
 
 @Component({
   selector: "app-expense-reports-page",
@@ -35,7 +36,7 @@ export class ExpenseReportsPage implements OnInit {
   selectedUserId = "";
   year: number = new Date().getFullYear();
   month: number = new Date().getMonth() + 1;
-  error: string | null = null;
+  private readonly snackbarService = inject(SnackbarService);
 
   ngOnInit(): void {
     this.loadReports();
@@ -53,11 +54,9 @@ export class ExpenseReportsPage implements OnInit {
 
   create(): void {
     if (!this.selectedUserId) {
-      this.error = "User required to create an expense report";
-      console.log(this.error);
+      this.snackbarService.error("User required to create an expense report");
       return;
     }
-    this.error = null;
 
     this.reportsService
       .create({
@@ -67,20 +66,18 @@ export class ExpenseReportsPage implements OnInit {
       })
       .subscribe({
         next: () => this.loadReports(),
-        error: (err) => {
-          this.error = err.message;
-          console.log(this.error);
-        },
+        error: err => {
+          this.snackbarService.error(err.message);
+        }
       });
   }
 
   delete(id: string): void {
     this.reportsService.delete(id).subscribe({
       next: () => this.loadReports(),
-      error: (err) => {
-        this.error = err.message;
-        console.log(this.error);
-      },
+      error: err => {
+        this.snackbarService.error(err.message);
+      }
     });
   }
 }
