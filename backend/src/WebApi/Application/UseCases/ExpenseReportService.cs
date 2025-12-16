@@ -2,23 +2,29 @@
 using WebApi.Application.Dtos;
 using WebApi.Application.Interfaces;
 using WebApi.Domain.Entities;
+using WebApi.Domain.Errors;
 
 namespace WebApi.Application.UseCases;
 
 public sealed class ExpenseReportService(IUserRepository users, IExpenseReportRepository reports)
 {
-    public async Task<Guid?> CreateAsync(CreateExpenseReportDto dto, CancellationToken ct)
+    public async Task<(Guid? Id, DomainError? Error)> CreateAsync(CreateExpenseReportDto dto, CancellationToken ct)
     {
        var user = await users.GetByIdAsync(dto.UserId, ct);
        if (user == null || user.IsDeleted)
        {
-           return null;
+           return (null, DomainErrors.UserDeleted(dto.UserId));
+       }
+
+       if (!user.IsActive)
+       {
+           return (null, DomainErrors.UserInactive(dto.UserId));
        }
        
        var exists = await reports.ExistsForUserMonthAsync(dto.UserId, dto.Year, dto.Month, ct); 
        if (exists) 
        { 
-           return null;
+           return (null, new DomainError("report.duplicate", "An expense already exists for this user/month."));
        }
        
        var title = BuildTitle(user.FirstName, user.LastName, dto.Month, dto.Year);
@@ -35,7 +41,7 @@ public sealed class ExpenseReportService(IUserRepository users, IExpenseReportRe
        await reports.AddAsync(report, ct);
        await reports.SaveChangesAsync(ct);
        
-       return report.Id;
+       return (report.Id, null);
     }
     
     private static string BuildTitle(string firstName, string lastName, int month, int year)

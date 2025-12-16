@@ -28,10 +28,10 @@ public sealed class ExpenseReportsController(ExpenseReportService expenseReportS
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateExpenseReportDto dto, CancellationToken ct)
     {
-        var id = await expenseReportService.CreateAsync(dto, ct);
-        if (id == null)
+        var (id, error) = await expenseReportService.CreateAsync(dto, ct);
+        if (error != null )
         {
-            return BadRequest("An expense report already exists for this period of time");
+            return BadRequest(error.Message);
         }
         return CreatedAtAction(nameof(GetById), new { id }, null);
     }

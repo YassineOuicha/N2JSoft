@@ -28,13 +28,11 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
         [FromBody] CreateExpenseDto dto,
         CancellationToken ct)
     {
-        var id = await expenseService.CreateAsync(reportId, dto, ct);
-
-        if (id == null)
+        var (id, error )= await expenseService.CreateAsync(reportId, dto, ct);
+        if (error != null)
         {
-            return BadRequest("The requirements to create the expense are not met");
+            return BadRequest(error.Message);
         }
-        
         return Created($"api/expenses/{id}", null);
     }
     
@@ -42,8 +40,8 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
     [HttpPut("{id:guid}")]
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateExpenseDto dto, CancellationToken ct)
     {
-        var isUpdated = await expenseService.UpdateAsync(id, dto, ct);
-        return isUpdated ? NoContent() : NotFound("No expense found to be updated");
+        var (ok, error) = await expenseService.UpdateAsync(id, dto, ct);
+        return ok ? NoContent() : BadRequest(error!.Message);
     }
     
     // DELETE api/expenses/{id}

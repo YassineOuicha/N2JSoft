@@ -11,6 +11,7 @@ internal sealed class ExpenseRepository(AppDbContext db): IExpenseRepository
     {
         return await db.Expenses
             .AsNoTracking()
+            .Where(e => !e.IsDeleted)
             .FirstOrDefaultAsync(e => e.Id == id, ct);
     }
 
@@ -18,6 +19,7 @@ internal sealed class ExpenseRepository(AppDbContext db): IExpenseRepository
     {
         return await db.Expenses
             .AsNoTracking()
+            .Where(e => !e.IsDeleted)
             .Include(e => e.ExpenseReport)
             .Where(e =>
                 e.ExpenseReport.UserId == userId &&

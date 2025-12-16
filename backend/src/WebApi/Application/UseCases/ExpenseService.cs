@@ -1,6 +1,7 @@
 ﻿using WebApi.Application.Dtos;
 using WebApi.Application.Interfaces;
 using WebApi.Domain.Entities;
+using WebApi.Domain.Errors;
 using WebApi.Domain.ValueObjects;
 
 namespace WebApi.Application.UseCases;
@@ -10,31 +11,35 @@ public sealed class ExpenseService(
     IExpenseReportRepository reports,
     IExpenseRepository expenses)
 {
-    public async Task<Guid?> CreateAsync(Guid reportId, CreateExpenseDto dto, CancellationToken ct)
+    public async Task<(Guid? Id, DomainError? Error)> CreateAsync(Guid reportId, CreateExpenseDto dto, CancellationToken ct)
     {
         var report = await reports.GetByIdAsync(reportId, ct);
         if (report == null)
         {
-            return null;
+            return (null, new DomainError("report.notfound", "Expense report not found"));
         }
         
         var user = await users.GetByIdAsync(report.UserId, ct);
-        if (user == null || user.IsDeleted || !user.IsActive)
+        if (user == null || user.IsDeleted )
         {
-            return null;
+            return (null, DomainErrors.UserDeleted(report.UserId));
         }
-
-        if (dto.Description.Length > 50)
+        
+        if (!user.IsActive)
         {
-            // to do : errors handling
-            return null; // Description is too long
+            return (null, DomainErrors.UserInactive(report.UserId));
+        }
+        
+        var descError = ExpensePolicy.ValidateDescription(dto.Description);
+        if (descError != null)
+        { 
+            return (null, descError);
         }
         
         var count = await expenses.CountForUserMonthAsync(user.Id, report.Year, report.Month, ct);
-        
-        if (count >= user.MonthlyExpenseLimit){
-            // to do : errors handling
-            return null; // Monthly limit reached, no more expenses allowed
+        if (count >= user.MonthlyExpenseLimit)
+        {
+            return (null, DomainErrors.MonthlyQuotaReached(user.MonthlyExpenseLimit));
         }
 
 
@@ -52,21 +57,21 @@ public sealed class ExpenseService(
         await expenses.AddAsync(expense, ct);
         await expenses.SaveChangesAsync(ct);
         
-        return expense.Id;
+        return (expense.Id, null);
     }
     
-    public async Task<bool> UpdateAsync(Guid expenseId, UpdateExpenseDto dto, CancellationToken ct)
+    public async Task<(bool Ok, DomainError? Error)> UpdateAsync(Guid expenseId, UpdateExpenseDto dto, CancellationToken ct)
     {
         var expense = await expenses.GetByIdAsync(expenseId, ct);
-        if (expense == null || expense.IsDeleted)
+        if (expense == null)
         {
-            return false;
+            return (false, new DomainError("expense.notfound", "Expense not found"));
         }
 
-        if (dto.Description.Length > 50)
-        {
-            // to do : errors handling
-            return false; // Description is too long
+        var descError = ExpensePolicy.ValidateDescription(dto.Description);
+        if (descError != null)
+        { 
+            return (false, descError);
         }
         
         expense.Date = dto.Date;
@@ -76,7 +81,7 @@ public sealed class ExpenseService(
         
         await expenses.SaveChangesAsync(ct);
         
-        return true;
+        return (true, null);
     }
 
     public async Task<PagedResultDto<ExpenseListItemDto>?> ListByReportPagedAsync(Guid reportId, int pageNumber, int pageSize, CancellationToken ct)
