@@ -16,14 +16,14 @@ internal sealed class UserRepository(AppDbContext db): IUserRepository
 
     public async Task<IReadOnlyList<User>> ListAsync(bool onlyActive, CancellationToken ct)
     {
-        var query = db.Users.AsNoTracking().AsQueryable();
+        var query = db.Users.AsNoTracking().AsQueryable().Where(u => !u.IsDeleted);
         if (onlyActive)
         {
             query = query.Where(u => u.IsActive);
         }
         return await query
-            .OrderBy(x => x.LastName)
-            .ThenBy(x => x.FirstName)
+            .OrderBy(u => u.LastName)
+            .ThenBy(u => u.FirstName)
             .ToListAsync(ct);
     }
 

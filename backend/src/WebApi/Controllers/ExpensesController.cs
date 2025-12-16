@@ -18,7 +18,7 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
         var safePage = pageNumber<=0 ? 1: pageNumber;
         var result = await expenseService.ListByReportPagedAsync(reportId, safePage, pageSize:5, ct);
 
-        return result == null ? NotFound() : Ok(result);
+        return result == null ? NotFound("No expense found") : Ok(result);
     }
     
     // POST api/expenses/by-report/{reportId}
@@ -32,7 +32,7 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
 
         if (id == null)
         {
-            return BadRequest();
+            return BadRequest("The requirements to create the expense are not met");
         }
         
         return Created($"api/expenses/{id}", null);
@@ -43,7 +43,7 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateExpenseDto dto, CancellationToken ct)
     {
         var isUpdated = await expenseService.UpdateAsync(id, dto, ct);
-        return isUpdated ? NoContent() : NotFound();
+        return isUpdated ? NoContent() : NotFound("No expense found to be updated");
     }
     
     // DELETE api/expenses/{id}
@@ -51,6 +51,6 @@ public class ExpensesController(ExpenseService expenseService): ControllerBase
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         var isDeleted = await expenseService.DeleteAsync(id, ct);
-        return isDeleted ? NoContent() : NotFound();
+        return isDeleted ? NoContent() : NotFound("No expense found to be deleted");
     }
 }

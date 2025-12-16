@@ -31,7 +31,7 @@ public sealed class ExpenseReportsController(ExpenseReportService expenseReportS
         var id = await expenseReportService.CreateAsync(dto, ct);
         if (id == null)
         {
-            return BadRequest();
+            return BadRequest("An expense report already exists for this period of time");
         }
         return CreatedAtAction(nameof(GetById), new { id }, null);
     }
@@ -41,6 +41,6 @@ public sealed class ExpenseReportsController(ExpenseReportService expenseReportS
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         var isDeleted = await expenseReportService.DeleteAsync(id, ct);
-        return isDeleted? NoContent() : NotFound();
+        return isDeleted? NoContent() : NotFound("Expense report specified not found");
     }
 }

@@ -20,7 +20,7 @@ public class UsersController(UserService userService) : ControllerBase
     public async Task<ActionResult<UserDetailDto>> GetById(Guid id, CancellationToken ct)
     {
         var user = await userService.GetByIdAsync(id, ct);
-        return user == null ? NotFound() : Ok(user);
+        return user == null ? NotFound("No user found for the specified Id") : Ok(user);
     }
     
     // Post api/users
@@ -36,7 +36,7 @@ public class UsersController(UserService userService) : ControllerBase
     public async Task<IActionResult> Update(Guid id, [FromBody] UpdateUserDto dto, CancellationToken ct)
     {
         var isUpdated = await userService.UpdateAsync(id, dto, ct);
-        return isUpdated? NoContent(): NotFound();
+        return isUpdated? NoContent(): NotFound("User specified not found");
     }
     
     // DELETE api/users/{id}
@@ -44,6 +44,6 @@ public class UsersController(UserService userService) : ControllerBase
     public async Task<IActionResult> Delete(Guid id, CancellationToken ct)
     {
         var isDeleted = await userService.DeleteAsync(id, ct);
-        return isDeleted ? NoContent() : NotFound();
+        return isDeleted ? NoContent() : NotFound("User specified not found");
     }
 }

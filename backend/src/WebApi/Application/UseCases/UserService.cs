@@ -47,8 +47,8 @@ public class UserService(IUserRepository users)
             MonthlyExpenseLimit = dto.MonthlyExpenseLimit,
             PostalAddress = new PostalAddress(
                 dto.Street,
-                dto.City,
                 dto.PostalCode,
+                dto.City,
                 dto.Country
             ),
             IsDeleted = false
@@ -76,8 +76,8 @@ public class UserService(IUserRepository users)
         user.MonthlyExpenseLimit = dto.MonthlyExpenseLimit;
         user.PostalAddress = new PostalAddress(
             dto.Street,
-            dto.City,
             dto.PostalCode,
+            dto.City,
             dto.Country
         );
 

@@ -43,6 +43,7 @@ internal sealed class ExpenseRepository(AppDbContext db): IExpenseRepository
        var query = db.Expenses
             .AsNoTracking()
             .Where(e => e.ExpenseReportId == reportId)
+            .Where((e => !e.IsDeleted))
             .OrderBy(e => e.Date)
             .ThenByDescending(x => x.Id);
 
