@@ -10,7 +10,7 @@ import { SnackbarService } from "../../../core/services/snackbar.service";
   selector: "app-expense-reports-detail-page",
   imports: [ExpenseBlock, NavbarComponent],
   templateUrl: "./expense-reports-detail-page.html",
-  styleUrl: "./expense-reports-detail-page.css",
+  styleUrl: "./expense-reports-detail-page.scss",
 })
 export class ExpenseReportsDetailPage implements OnInit {
   report: ExpenseReportListItemDto | null = null;

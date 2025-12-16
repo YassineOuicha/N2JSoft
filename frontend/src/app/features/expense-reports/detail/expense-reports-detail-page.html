@@ -1,7 +1,9 @@
 <app-navbar></app-navbar>
-@if (report) {
-    <ng-container>
-        <h2>{{ report.title }}</h2>
-        <app-expense-block [reportId]="report.id"></app-expense-block>
-    </ng-container>
-}
+<div class="page-container">
+    @if (report) {
+        <ng-container>
+            <h2>{{ report.title }}</h2>
+            <app-expense-block [reportId]="report.id"></app-expense-block>
+        </ng-container>
+    }
+</div>

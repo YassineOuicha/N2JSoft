@@ -18,7 +18,7 @@ import { SnackbarService } from "../../core/services/snackbar.service";
     MatInput,
   ],
   templateUrl: "./expense-block.html",
-  styleUrl: "./expense-block.css",
+  styleUrl: "./expense-block.scss",
 })
 export class ExpenseBlock implements OnInit {
   @Input({ required: true }) reportId: string;

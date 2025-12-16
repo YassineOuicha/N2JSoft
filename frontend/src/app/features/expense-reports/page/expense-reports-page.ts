@@ -24,7 +24,7 @@ import { SnackbarService } from "../../../core/services/snackbar.service";
       MatInputModule,
   ],
   templateUrl: "./expense-reports-page.html",
-  styleUrl: "./expense-reports-page.css",
+  styleUrl: "./expense-reports-page.scss",
 })
 export class ExpenseReportsPage implements OnInit {
   private readonly reportsService = inject(ExpenseReportsService);

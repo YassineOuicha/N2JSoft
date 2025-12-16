@@ -1,12 +1,14 @@
 <mat-toolbar color="primary">
-    <img src="logo.svg" alt="Logo" height="32" style="margin-right: 16px" />
+    <img routerLink="/" src="logo.svg" alt="Logo" height="32" style="margin-right: 16px" />
 
-    <span style="flex: 1 1 auto">Expense Management App</span>
+    <span style="flex: 1 1 auto">Manage your expense reports efficiently</span>
 
-    <a mat-button routerLink="/expense-reports" routerLinkActive="active">
-        Expense reports
-    </a>
-    <a mat-button routerLink="/users" routerLinkActive="active">
-        Users
-    </a>
+    <div class="pager">
+        <a mat-stroked-button routerLink="/expense-reports">
+            Manage expense reports
+        </a>
+        <a mat-stroked-button routerLink="/users">
+            Manage users
+        </a>
+    </div>
 </mat-toolbar>

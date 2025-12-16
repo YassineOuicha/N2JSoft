@@ -1,0 +1,92 @@
+<div class="page-container">
+    <h2>{{ data.title }}</h2>
+
+    <form #form="ngForm">
+
+        <div class="form-row">
+
+            <mat-form-field>
+                <input matInput
+                       name="firstName"
+                       placeholder="First name"
+                       [(ngModel)]="model.firstName"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       name="lastName"
+                       placeholder="Last name"
+                       [(ngModel)]="model.lastName"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       name="street"
+                       placeholder="Street"
+                       [(ngModel)]="model.street"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       name="city"
+                       placeholder="City"
+                       [(ngModel)]="model.city"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       name="postalCode"
+                       placeholder="Postal code"
+                       [(ngModel)]="model.postalCode"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       name="country"
+                       placeholder="Country"
+                       [(ngModel)]="model.country"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput
+                       type="number"
+                       name="monthlyExpenseLimit"
+                       placeholder="Monthly limit"
+                       [(ngModel)]="model.monthlyExpenseLimit"
+                       required
+                       min="1" />
+            </mat-form-field>
+
+            <mat-checkbox
+                    name="isActive"
+                    [(ngModel)]="model.isActive">
+                Active
+            </mat-checkbox>
+
+        </div>
+
+        <div style="margin-top: 16px; display: flex; gap: 8px">
+            <button
+                    mat-raised-button
+                    type="button"
+                    (click)="save()"
+                    [disabled]="form.invalid">
+                Save
+            </button>
+
+            <button
+                    mat-stroked-button
+                    type="button"
+                    (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+</div>
