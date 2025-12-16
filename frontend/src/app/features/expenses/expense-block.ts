@@ -6,6 +6,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import {MatFormField, MatInput} from '@angular/material/input';
 import { SnackbarService } from "../../core/services/snackbar.service";
+import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
 
 @Component({
   selector: "app-expense-block",
@@ -16,6 +17,7 @@ import { SnackbarService } from "../../core/services/snackbar.service";
     MatTableModule,
     MatFormField,
     MatInput,
+    MatPaginatorModule,
   ],
   templateUrl: "./expense-block.html",
   styleUrl: "./expense-block.scss",
@@ -23,6 +25,7 @@ import { SnackbarService } from "../../core/services/snackbar.service";
 export class ExpenseBlock implements OnInit {
   @Input({ required: true }) reportId: string;
   private readonly expensesService = inject(ExpensesService);
+  private readonly snackbarService = inject(SnackbarService);
   expenses: ExpenseListItemDto[] = [];
   pageNumber = 1;
   pageSize = 5;
@@ -34,11 +37,11 @@ export class ExpenseBlock implements OnInit {
   city = "";
   postalCode = "";
 
-  private readonly snackbarService = inject(SnackbarService);
-
   ngOnInit() {
     this.load();
   }
+
+
 
   load(): void {
     this.expensesService
@@ -47,7 +50,7 @@ export class ExpenseBlock implements OnInit {
         next: (result) => {
           this.expenses = result.items;
           this.totalCount = result.totalCount;
-          this.pageNumber = result.pageSize;
+          this.pageNumber = result.pageNumber;
         },
         error: err => {
           this.snackbarService.error(err.message);
@@ -86,13 +89,9 @@ export class ExpenseBlock implements OnInit {
     });
   }
 
-  next(): void {
-    this.pageNumber += 1;
-    this.load();
-  }
-
-  prev(): void {
-    this.pageNumber -= 1;
+  onPageChange(event: PageEvent): void{
+    this.pageNumber = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
     this.load();
   }
 

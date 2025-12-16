@@ -110,3 +110,5 @@ To do: configure navigation properties between tables
 To do : implement a snackbar to inform user of error instead of printing errors
 
 To do: i  need to handle errors for backend so i can now what error exactly happened
+
+pagination pageSize options limited for 5 as requested
