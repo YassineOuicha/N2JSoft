@@ -32,12 +32,6 @@ export class ExpenseBlock implements OnInit {
   pageNumber = 1;
   pageSize = 5;
   totalCount = 0;
-  description = "";
-  amount = 0;
-  brand = "";
-  street = "";
-  city = "";
-  postalCode = "";
 
   ngOnInit() {
     this.load();
@@ -50,31 +44,17 @@ export class ExpenseBlock implements OnInit {
       .listByReport(this.reportId, this.pageNumber)
       .subscribe({
         next: (result) => {
+          const totalPages = this.getTotalPages(result.totalCount);
+
+          if (this.pageNumber > totalPages) {
+            this.pageNumber = totalPages;
+            this.load();
+            return;
+          }
+
           this.expenses = result.items;
           this.totalCount = result.totalCount;
           this.pageNumber = result.pageNumber;
-        },
-        error: err => {
-          this.snackbarService.error(err.error);
-        }
-      });
-  }
-
-  create(): void {
-    this.expensesService
-      .create(this.reportId, {
-        date: new Date().toISOString().substring(0, 10),
-        description: this.description,
-        amount: this.amount,
-        brand: this.brand,
-        street: this.street,
-        city: this.city,
-        postalCode: this.postalCode,
-      })
-      .subscribe({
-        next: () => {
-          this.reset();
-          this.load();
         },
         error: err => {
           this.snackbarService.error(err.error);
@@ -136,13 +116,7 @@ export class ExpenseBlock implements OnInit {
     });
   }
 
-
-  private reset() {
-    this.description = "";
-    this.amount = 0;
-    this.brand = "";
-    this.street = "";
-    this.city = "";
-    this.postalCode = "";
+  private getTotalPages(totalCount: number): number {
+    return Math.max(1, Math.ceil(totalCount / this.pageSize));
   }
 }

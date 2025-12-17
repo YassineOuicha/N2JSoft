@@ -29,7 +29,7 @@ export class ExpenseDialogComponent {
     model: CreateExpenseDto = this.data.expense ?? {
         date: new Date().toISOString().substring(0, 10),
         description: "",
-        amount: 0,
+        amount: 0.01,
         brand: "",
         street: "",
         city: "",
