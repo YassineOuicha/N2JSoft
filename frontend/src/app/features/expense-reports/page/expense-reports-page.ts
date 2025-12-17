@@ -53,8 +53,7 @@ export class ExpenseReportsPage implements OnInit {
   }
 
   create(): void {
-    if (!this.selectedUserId) {
-      this.snackbarService.error("User required to create an expense report");
+    if (!this.validateBeforeCreate()) {
       return;
     }
 
@@ -79,5 +78,24 @@ export class ExpenseReportsPage implements OnInit {
         this.snackbarService.error(err.error);
       }
     });
+  }
+
+  private validateBeforeCreate(): boolean {
+    if (!this.selectedUserId) {
+      this.snackbarService.error("User required to create an expense report");
+      return false;
+    }
+
+    if (this.month < 1 || this.month > 12) {
+      this.snackbarService.error("Month must be between 1 and 12");
+      return false;
+    }
+
+    if (this.year < 1900 || this.year > 3000) {
+      this.snackbarService.error("Year must be between 1900 and 3000");
+      return false;
+    }
+
+    return true;
   }
 }
