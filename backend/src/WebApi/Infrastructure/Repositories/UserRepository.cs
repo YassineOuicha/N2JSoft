@@ -11,6 +11,7 @@ internal sealed class UserRepository(AppDbContext db): IUserRepository
     {
         return await db.Users
             .AsNoTracking()
+            .Where(u => !u.IsDeleted)
             .FirstOrDefaultAsync(u => u.Id == userId, ct);
     }
 

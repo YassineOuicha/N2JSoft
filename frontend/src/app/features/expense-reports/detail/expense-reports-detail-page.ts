@@ -28,7 +28,7 @@ export class ExpenseReportsDetailPage implements OnInit {
     this.reportsService.getById(id).subscribe({
       next: (data) => (this.report = data),
       error: err => {
-        this.snackbarService.error(err.message);
+        this.snackbarService.error(err.error);
       }
     });
   }

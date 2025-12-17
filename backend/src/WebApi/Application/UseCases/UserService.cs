@@ -67,11 +67,9 @@ public class UserService(IUserRepository users)
         {
             return false;
         }
-
-        // To do : check logic if we need to update only specific fields
-        //  user.FirstName = dto.FirstName;
-        //  user.LastName = dto.LastName;
         
+        user.FirstName = dto.FirstName;
+        user.LastName = dto.LastName;
         user.IsActive = dto.IsActive;
         user.MonthlyExpenseLimit = dto.MonthlyExpenseLimit;
         user.PostalAddress = new PostalAddress(

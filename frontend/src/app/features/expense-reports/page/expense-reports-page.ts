@@ -67,7 +67,7 @@ export class ExpenseReportsPage implements OnInit {
       .subscribe({
         next: () => this.loadReports(),
         error: err => {
-          this.snackbarService.error(err.message);
+          this.snackbarService.error(err.error);
         }
       });
   }
@@ -76,7 +76,7 @@ export class ExpenseReportsPage implements OnInit {
     this.reportsService.delete(id).subscribe({
       next: () => this.loadReports(),
       error: err => {
-        this.snackbarService.error(err.message);
+        this.snackbarService.error(err.error);
       }
     });
   }

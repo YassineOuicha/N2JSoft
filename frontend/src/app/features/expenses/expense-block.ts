@@ -53,7 +53,7 @@ export class ExpenseBlock implements OnInit {
           this.pageNumber = result.pageNumber;
         },
         error: err => {
-          this.snackbarService.error(err.message);
+          this.snackbarService.error(err.error);
         }
       });
   }
@@ -75,7 +75,7 @@ export class ExpenseBlock implements OnInit {
           this.load();
         },
         error: err => {
-          this.snackbarService.error(err.message);
+          this.snackbarService.error(err.error);
         }
       });
   }
@@ -84,7 +84,7 @@ export class ExpenseBlock implements OnInit {
     this.expensesService.delete(id).subscribe({
       next: () => this.load(),
       error: err => {
-        this.snackbarService.error(err.message);
+        this.snackbarService.error(err.error);
       }
     });
   }

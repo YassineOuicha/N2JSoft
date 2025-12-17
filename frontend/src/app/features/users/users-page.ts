@@ -33,7 +33,7 @@ export class UsersPage implements OnInit {
     this.usersService.list(this.onlyActive).subscribe({
       next: (data) => (this.users = data),
       error: (err) => {
-        this.snackbarService.error(err.message);
+        this.snackbarService.error(err.error);
       },
     });
   }
@@ -57,7 +57,7 @@ export class UsersPage implements OnInit {
           this.snackbarService.success('User created');
           this.load();
         },
-        error: err => this.snackbarService.error(err.message)
+        error: err => this.snackbarService.error(err.error)
       });
     });
   }
@@ -79,7 +79,7 @@ export class UsersPage implements OnInit {
             this.snackbarService.success('User updated');
             this.load();
           },
-          error: err => this.snackbarService.error(err.message)
+          error: err => this.snackbarService.error(err.error)
         });
       });
     });
@@ -90,7 +90,7 @@ export class UsersPage implements OnInit {
     this.usersService.delete(id).subscribe({
       next: () => this.load(),
       error: (err) => {
-        this.snackbarService.error(err.message);
+        this.snackbarService.error(err.error);
       },
     });
   }
