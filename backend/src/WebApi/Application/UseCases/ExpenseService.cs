@@ -50,7 +50,7 @@ public sealed class ExpenseService(
             Date = dto.Date,
             Description = dto.Description,
             Amount = dto.Amount,
-            BillingAddress = new BillingAddress(dto.Brand, dto.Street, dto.City, dto.City),
+            BillingAddress = new BillingAddress(dto.Brand, dto.Street, dto.PostalCode, dto.City),
             IsDeleted = false,
         };
         

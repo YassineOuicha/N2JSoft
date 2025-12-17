@@ -11,7 +11,6 @@ internal sealed class ExpenseReportRepository(AppDbContext db): IExpenseReportRe
     public async Task<ExpenseReport?> GetByIdAsync(Guid expenseReportId, CancellationToken ct)
     {
         return await db.ExpenseReports
-            .AsNoTracking()
             .FirstOrDefaultAsync(er => er.Id == expenseReportId, ct);
     }
 

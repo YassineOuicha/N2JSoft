@@ -10,7 +10,6 @@ internal sealed class ExpenseRepository(AppDbContext db): IExpenseRepository
     public async Task<Expense?> GetByIdAsync(Guid id, CancellationToken ct)
     {
         return await db.Expenses
-            .AsNoTracking()
             .Where(e => !e.IsDeleted)
             .FirstOrDefaultAsync(e => e.Id == id, ct);
     }
