@@ -4,9 +4,10 @@ import {ExpenseListItemDto} from "../../shared/models/expense.models";
 import {FormsModule} from "@angular/forms";
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
-import {MatFormField, MatInput} from '@angular/material/input';
 import { SnackbarService } from "../../core/services/snackbar.service";
 import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
+import { ExpenseDialogComponent } from "./dialog/expense-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "app-expense-block",
@@ -15,9 +16,7 @@ import { MatPaginatorModule, PageEvent } from "@angular/material/paginator";
     MatTableModule,
     MatButtonModule,
     MatTableModule,
-    MatFormField,
-    MatInput,
-    MatPaginatorModule,
+    MatPaginatorModule
   ],
   templateUrl: "./expense-block.html",
   styleUrl: "./expense-block.scss",
@@ -26,6 +25,9 @@ export class ExpenseBlock implements OnInit {
   @Input({ required: true }) reportId: string;
   private readonly expensesService = inject(ExpensesService);
   private readonly snackbarService = inject(SnackbarService);
+
+  private readonly dialog = inject(MatDialog);
+
   expenses: ExpenseListItemDto[] = [];
   pageNumber = 1;
   pageSize = 5;
@@ -94,6 +96,46 @@ export class ExpenseBlock implements OnInit {
     this.pageSize = event.pageSize;
     this.load();
   }
+
+  openCreateDialog(): void {
+    const ref = this.dialog.open(ExpenseDialogComponent, {
+      data: { title: "Add expense" }
+    });
+
+    ref.afterClosed().subscribe(dto => {
+      if (!dto) return;
+
+      this.expensesService.create(this.reportId, dto).subscribe({
+        next: () => {
+          this.snackbarService.success("Expense created");
+          this.load();
+        },
+        error: err => this.snackbarService.error(err.error)
+      });
+    });
+  }
+
+  openEditDialog(expense: ExpenseListItemDto): void {
+    const ref = this.dialog.open(ExpenseDialogComponent, {
+      data: {
+        title: "Edit expense",
+        expense: { ...expense }
+      }
+    });
+
+    ref.afterClosed().subscribe(dto => {
+      if (!dto) return;
+
+      this.expensesService.update(expense.id, dto).subscribe({
+        next: () => {
+          this.snackbarService.success("Expense updated");
+          this.load();
+        },
+        error: err => this.snackbarService.error(err.error)
+      });
+    });
+  }
+
 
   private reset() {
     this.description = "";

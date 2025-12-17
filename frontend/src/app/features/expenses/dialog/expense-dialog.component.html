@@ -1,0 +1,66 @@
+<div class="page-container">
+    <h2>{{ data.title }}</h2>
+
+    <form #form="ngForm">
+
+        <div class="form-row">
+            <mat-form-field>
+                <input matInput name="description"
+                       placeholder="Description"
+                       [(ngModel)]="model.description"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput type="number"
+                       name="amount"
+                       placeholder="Amount (€)"
+                       [(ngModel)]="model.amount"
+                       required
+                       min="0.01" />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput name="brand"
+                       placeholder="Brand"
+                       [(ngModel)]="model.brand"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput name="street"
+                       placeholder="Street"
+                       [(ngModel)]="model.street"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput name="city"
+                       placeholder="City"
+                       [(ngModel)]="model.city"
+                       required />
+            </mat-form-field>
+
+            <mat-form-field>
+                <input matInput name="postalCode"
+                       placeholder="Postal code"
+                       [(ngModel)]="model.postalCode"
+                       required />
+            </mat-form-field>
+        </div>
+
+        <div class="pager">
+            <button mat-stroked-button
+                    type="button"
+                    (click)="save()"
+                    [disabled]="form.invalid">
+                Save
+            </button>
+
+            <button mat-stroked-button type="button" (click)="cancel()">
+                Cancel
+            </button>
+        </div>
+
+    </form>
+</div>
