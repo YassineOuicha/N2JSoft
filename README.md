@@ -89,26 +89,135 @@ La page de visualisation d'une note de frais permet :
 - d'afficher les dépenses existantes par lot de 5.
 
 
-## Mes Notes
+## Mes Notes:
 
-À compléter par vos soins.
+### Architecture & Backend
 
-To do : check if we need to update firstname/lastname of a user. if so change entity to set
-/// for now we only update other fields than names.
+L’application backend est construite selon une **Clean Architecture (Onion)** afin de garantir une séparation claire des responsabilités :
 
-To do : implement extension methods to map entities to dtos and vice versa to reduce boilerplate code.
+- **Domain** : entités, value objects, règles métier
+- **Application** : use cases, DTOs, interfaces
+- **Infrastructure** : EF Core, repositories, persistance
+- **WebApi** : contrôleurs HTTP
 
-Todo : implements errors handling for example expense note's description length exceeded, user not found when creating expense note etc...
+Utilisation d’**ASP.NET Core Web API** avec contrôleurs plutôt que des endpoints minimaux afin de conserver une structure claire et extensible.
 
-To do: replace the minimal api endpoints
+### CQRS
 
-To do: Use CQRS if possible to separate queries from commands
+Mise en place du pattern **CQRS**, regroupées actuellement dans les mêmes services applicatifs.
 
-To do: configure navigation properties between tables 
+- Piste d’amélioration : séparation stricte **Command / Query** dans des handlers dédiés.
 
+### Entity Framework Core
 
-To do : implement a snackbar to inform user of error instead of printing errors
+Entity Framework Core est utilisé pour le mapping et le requêtage de la base de données:
 
-To do: i  need to handle errors for backend so i can now what error exactly happened
+- Configuration explicite des propriétés (types, longueurs, champs requis)
+- Relations et clés correctement définies
+- Utilisation de navigation properties pour les liens entre entités
 
-pagination pageSize options limited for 5 as requested
+### Value Objects (Owned Types)
+
+Utilisation de Value Objects via des **Owned Types** pour les addresses pour la ré-utilisation selon le besoin :
+
+- `PostalAddress` pour représenter l'addresse des utilisateurs
+- `BillingAddress` pour represénter l'addresse de la facutation des dépenses
+
+### Suppressions
+
+- Suppression logique pour les utilisateurs et les dépenses
+- Suppression physique pour les notes de frais
+
+### Règles métier & gestion des erreurs
+
+Les règles métier critiques sont centralisées côté backend :
+
+- Quota mensuel de dépenses par utilisateur
+- Utilisateur actif / inactif
+- Validations métier (description, montants, etc.)
+
+Gestion explicite des erreurs via des **DomainErrors**, permettant de retourner des messages clairs et précis au frontend.
+
+---
+
+### Frontend (Angular)
+
+Architecture Angular structurée par **features** et **core/shared**, facilitant la maintenance et l’évolution.
+
+### Angular Material
+
+Utilisation de **Angular Material** pour :
+
+- Tables
+- Pagination
+- Dialogs
+- Form-fields
+
+Cela améliore la lisibilité et accélère le développement sans se focaliser sur le design.
+
+### Composants réutilisables
+
+Mise en place de composants réutilisables :
+
+- Dialogs communs pour la création / édition des utilisateurs et des dépenses
+- Blocs fonctionnels isolés (ex : expenses block)
+
+### Formulaires
+
+Gestion des formulaires avec validation obligatoire des champs et règles spécifiques (ex : montant strictement positif).
+
+### Accès API
+
+Utilisation d’un **ApiClient centralisé** pour standardiser les appels HTTP vers l’API :
+
+- GET
+- POST
+- PUT
+- DELETE
+
+### Modèles TypeScript
+
+Utilisation d’interfaces TypeScript pour les modèles (DTOs) afin de :
+
+- Garantir le typage
+- Faciliter l’extension future
+- Assurer la cohérence entre backend et frontend
+- Ent
+- Etendre facilement les modèles si besoin
+
+### Gestion des erreurs UI
+
+Gestion des erreurs côté UI via un **SnackbarService** afin de notifier clairement l’administrateur en cas d’erreur métier ou technique.
+
+### Styles & configuration
+
+- Centralisation des styles globaux via `styles.scss`
+- Utilisation des variables d’environnement pour standardiser les URLs de l’API
+
+---
+
+### Sécurité / rôles
+
+L’application est conçue comme un outil interne utilisé exclusivement par un administrateur (secrétaire / comptable).
+
+Aucun mécanisme d’authentification ou de gestion de rôles n’a été implémenté volontairement afin de rester dans le périmètre du test technique.
+
+Tous les traitements (création, modification et suppression des utilisateurs, notes de frais et dépenses) sont effectués par l’administrateur pour le compte des utilisateurs.
+
+Une évolution naturelle consisterait donc à ajouter :
+
+- Une authentification JWT / Identity
+- Un rôle `Admin` pour représenter l'administrateur
+- Des guards côté Angular et des `[Authorize]` côté API
+
+---
+
+### Pistes d’amélioration
+
+- Séparation stricte Command / Query (CQRS avancé): actuellement les services regroupent les deux
+- Ajout d’un système d’authentification et de rôles
+- Amélioration du thème Material et personnalisation avancée des styles design
+- Tests unitaires et tests d’intégration (Pour ce TP Postman est utilisé pour les tests)
+- Internationalisation (i18n) pour traduire les interfaces
+- Validation plus avancée côté frontend (Reactive Forms)
+
